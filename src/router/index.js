@@ -11,7 +11,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(route => {
-  window.document.title = route.meta.meta || '一码当先'
+  window.document.title = route.meta.meta || '考勤系统'
 })
 
 export default router

@@ -1,6 +1,18 @@
 <template lang="pug">
-  .headline 正在登录,请稍后
+    .text-center
+        v-progress-circular(:size='80', color='primary', indeterminate='')
+            p.font-weight-thin We Loading…
 </template>
+<style lang="stylus">
+    .v-progress-circular {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+</style>
 <script>
   import * as util from '_u/util'
 
