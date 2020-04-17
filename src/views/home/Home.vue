@@ -33,7 +33,7 @@
     },
     computed: {
       isAuth() {
-        return this.$store.getters['auth/isOauth']
+        return this.$store.getters['auth/isAuth']
       },
       username() {
         return this.$store.getters['auth/username']
