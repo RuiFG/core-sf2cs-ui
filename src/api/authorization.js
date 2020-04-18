@@ -9,13 +9,13 @@ const pre = "/authorization"
  */
 export const postAccessToken = (code) => {
   return axios.request({
-    url: `${pre}/oauth/code/${code}`,
+    url: `${pre}/code/${code}`,
     method: 'get',
   })
 }
 export const getMe = () => {
   return axios.request({
-    url: `${pre}/auth/me`,
+    url: `${pre}/me`,
     method: 'get'
   })
 }

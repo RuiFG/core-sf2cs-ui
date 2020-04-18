@@ -15,15 +15,46 @@ export const routeBack = () => {
   router.back()
 }
 //转换图片使用
-export const arrayBufferToBase64 = (buffer) => {
+export const arrayToBase64 = (buffer) => {
   let binary = ''
   const bytes = new Uint8Array(buffer)
+  console.log(bytes)
   for (var i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
+    binary += String.fromCharCode(bytes[i])
   }
-  return 'data:image/png;base64,' + window.btoa(binary);
+  return window.btoa(binary)
+}
+export const base64ToArray = (base64) => {
+  var binary_string = window.atob(base64)
+  var len = binary_string.length
+  var bytes = new Uint8Array(len)
+  for (var i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i)
+  }
+  return Array.prototype.slice.call(bytes);
 }
 
 export const formatTime = (localTime) => {
   return localTime.substring(0, localTime.length - 7).replace("T", " ")
+}
+
+import _ from 'lodash'
+
+export const toRecognitionResult = (data) => {
+  let recognitionResult = {}
+  if (_.isString(data)) {
+    data = JSON.parse(data)
+  }
+  recognitionResult.id = data.id
+  recognitionResult.persons = []
+  if (!_.isEmpty(data.persons)) {
+    data.persons.forEach((value) => {
+      let person = {}
+      person.id = value.personId
+      person.faceImg = 'data:image/png;base64,' + arrayToBase64(value.faceImgData)
+      person.compareScore = value.compareScore
+      recognitionResult.persons.push(person)
+    })
+  }
+  return recognitionResult
 }

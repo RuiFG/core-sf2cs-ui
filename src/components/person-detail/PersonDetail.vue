@@ -6,7 +6,7 @@
     v-chip-group.ml-2
       v-chip(label color="success")
         v-icon(left) mdi-label
-        span {{classes}}
+        span {{gatherName}}
       v-chip.white--text( label color="red") {{time}}
 
 
@@ -17,7 +17,7 @@
     props: {
       name: String,
       img: String,
-      classes: String,
+      gatherName: String,
       time: String
     }
   }

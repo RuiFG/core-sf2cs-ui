@@ -26,6 +26,14 @@ const getters = {
   me: state => {
     return state.auth
   },
+  avatar: state => {
+    let avatar = state.auth.faceData
+    if (avatar == null) {
+      return "~@/assets/avatar.png"
+    } else {
+      return 'data:image/png;base64,' + avatar;
+    }
+  }
 }
 const mutations = {
   SET_TOKEN(state, params) {
@@ -39,7 +47,7 @@ const mutations = {
         state.role.push(Role[item])
       }
     })
-    state.token = {access_token: auth.access_token, refresh_token: auth.refresh_token}
+    state.token = auth.accessToken
   },
   // logout
   LOGOUT(state) {

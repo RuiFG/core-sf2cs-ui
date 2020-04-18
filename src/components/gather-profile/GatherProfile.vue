@@ -31,6 +31,7 @@
       attendanceId: Number,
       attendanceName: String,
       gatherName: String,
+      gatherId: Number,
       detectPersonIds: Array,
       notDetectPersonIds: Array,
       startTime: String,
@@ -38,7 +39,7 @@
     },
     methods: {
       click() {
-        this.$emit("click", this.attendanceId)
+        this.$emit("click", this.attendanceId, this.gatherId, this.gatherName)
       }
     }
   }

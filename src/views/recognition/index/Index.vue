@@ -1,5 +1,5 @@
 <template lang="pug">
-  #recognition
+  #recognition-index
     v-container.fill-height
       v-row
         v-btn-toggle.mx-auto
@@ -12,6 +12,7 @@
             :attendance-id="attendance.id"
             :attendance-name="attendance.name"
             :gather-name="attendance.gatherName"
+            :gather-id="attendance.gatherId",
             :not-detect-person-ids="attendance.notDetectPersonIds"
             :detect-person-ids="attendance.detectPersonIds"
             :start-time="util.formatTime(attendance.createTime)"
@@ -44,8 +45,10 @@
       })
     },
     methods: {
-      routeDetail(id) {
-        util.routeToName("recognition-detail", {id: id})
+      routeDetail(attendanceId, gatherId, gatherName) {
+        console.log(gatherId)
+        util.routeToName("recognition-detail",
+          {attendanceId: attendanceId, gatherId: gatherId, gatherName: gatherName})
       }
     }
   }

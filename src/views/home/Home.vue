@@ -8,7 +8,7 @@
         v-slide-x-transition
           .headline.pr-2(v-show="!drawer") {{username}}
         v-avatar(@click.stop="switchDrawer()")
-          v-img(src='https://randomuser.me/api/portraits/men/81.jpg')
+          v-img(:src='avatar')
       template(v-else)
         v-btn(text @click="toLogin").title.white--text 登录
     v-navigation-drawer(:mini-variant="drawer" app color="teal"  right v-if="isAuth")
@@ -37,6 +37,9 @@
       },
       username() {
         return this.$store.getters['auth/username']
+      },
+      avatar() {
+        return this.$store.getters['auth/avatar']
       }
     },
     data() {
