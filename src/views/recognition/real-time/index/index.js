@@ -1,2 +1,2 @@
-import RecognitionIndex from './Index'
+import RecognitionIndex from './index'
 export default RecognitionIndex
