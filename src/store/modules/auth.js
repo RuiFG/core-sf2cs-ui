@@ -1,18 +1,19 @@
+import * as managementAPI from '_api/management'
 import * as authAPI from '_api/authorization'
 import {Role} from '_u/role'
-import * as util from '_u/util'
-
 import _ from 'lodash'
+import * as util from '_u/util'
 
 const state = {
   token: null,
   // 授权信息，来源于 checkToken
-  auth: null,
-  role: []
+  user: null,
+  role: [],
+  person: null
 }
 const getters = {
   isAuth: state => {
-    return (state.token !== null && state.auth !== null) && (state.me !== null)
+    return (state.token !== null && state.user !== null && state.person !== null)
   },
   role: state => {
     return state.role[0]
@@ -21,48 +22,49 @@ const getters = {
     return state.token
   },
   username: state => {
-    return state.auth.alias
+    return state.person.alias
   },
   me: state => {
-    return state.auth
+    return state.person
   },
   avatar: state => {
-    let avatar = state.auth.faceData
-    if (avatar == null) {
-      return "~@/assets/avatar.png"
-    } else {
-      return 'data:image/png;base64,' + avatar;
-    }
+    return util.toAvatarSrc(state.person.avatar)
   }
 }
 const mutations = {
   SET_TOKEN(state, params) {
     state.token = params
   },
-  SET_AUTH(state, auth) {
-    state.auth = auth
+  SET_USER(state, user) {
+    state.user = user
     state.role = []
-    auth.authorities.forEach((item) => {
+    user.authorities.forEach((item) => {
       if (_.has(Role, item)) {
         state.role.push(Role[item])
       }
     })
-    state.token = auth.accessToken
+    state.token = user.accessToken
+    console.log(state.token)
+  },
+  SET_PERSON(state, person) {
+    state.person = person
   },
   // logout
   LOGOUT(state) {
     state.token = null
-    state.auth = null
+    state.user = null
+    state.person = null
     state.role = []
   }
 
 }
 const actions = {
-  getToken(store, {code}) {
+  login(store, {data}) {
     return new Promise((resolve, reject) => {
-      authAPI.postAccessToken(code)
+      authAPI.login(data)
         .then(data => {
-          store.commit('SET_AUTH', data)
+          store.commit('SET_USER', data.user)
+          store.commit('SET_PERSON', data.person)
           resolve(data);
         })
         .catch(error => {
@@ -70,10 +72,22 @@ const actions = {
         })
     })
   },
-  getMe(store) {
+  getUser(store) {
+    return new Promise((resolve, reject) => {
+      authAPI.getMe()
+        .then(data => {
+          store.commit('SET_USER', data)
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  getPerson(store) {
     return new Promise(((resolve, reject) => {
-      authAPI.getMe().then(data => {
-        store.commit('SET_AUTH', data)
+      managementAPI.getMe().then(data => {
+        store.commit('SET_PERSON', data)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -82,7 +96,6 @@ const actions = {
   },
   logout({commit}) {
     commit('LOGOUT')
-    util.routeToName("index")
   }
 }
 

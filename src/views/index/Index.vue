@@ -30,66 +30,8 @@
           span.grey--text.text--darken-1.font-weight-bold
             | Vuetify Documentation
       .py-12
-    section#features.grey.lighten-3
       .py-12
-      v-container.text-center
-        h2.display-2.font-weight-bold.mb-3 VUETIFY FEATURES
-        v-responsive.mx-auto.mb-12(width='56')
-          v-divider.mb-1
-          v-divider
-        v-row
-          v-col(v-for='({ icon, title, text }, i) in features', :key='i', cols='12', md='4')
-            v-card.py-12.px-4(color='grey lighten-5', flat='')
-              v-theme-provider(dark='')
-                div
-                  v-avatar(color='primary', size='88')
-                    v-icon(large='', v-text='icon')
-              v-card-title.justify-center.font-weight-black.text-uppercase(v-text='title')
-              v-card-text.subtitle-1(v-text='text')
-      .py-12
-    section#stats
-      v-parallax(:height='$vuetify.breakpoint.smAndDown ? 700 : 500', src='https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80')
-        v-container(fill-height='')
-          v-row.mx-auto
-            v-col(v-for='[value, title] of stats', :key='title', cols='12', md='3')
-              .text-center
-                .display-3.font-weight-black.mb-4(v-text='value')
-                .title.font-weight-regular.text-uppercase(v-text='title')
-    section#blog
-      .py-12
-      v-container
-        h2.display-2.font-weight-bold.mb-3.text-uppercase.text-center Blog
-        v-responsive.mx-auto.mb-12(width='56')
-          v-divider.mb-1
-          v-divider
-        v-row
-          v-col(v-for='({ src, text, title }, i) in articles', :key='i', cols='12', md='4')
-            v-img.mb-4(:src='src', height='275', max-width='100%')
-            h3.font-weight-black.mb-4.text-uppercase(v-text='title')
-            .title.font-weight-light.mb-5(v-text='text')
-            v-btn.ml-n4.font-weight-black(text='')
-              | Continue Reading
-      .py-12
-    v-sheet#contact(color='#333333', dark='', tag='section', tile='')
-      .py-12
-      v-container
-        h2.display-2.font-weight-bold.mb-3.text-uppercase.text-center Contact Me
-        v-responsive.mx-auto.mb-12(width='56')
-          v-divider.mb-1
-          v-divider
-        v-theme-provider(light='')
-          v-row
-            v-col(cols='12')
-              v-text-field(flat='', label='Name*', solo='')
-            v-col(cols='12')
-              v-text-field(flat='', label='Email*', solo='')
-            v-col(cols='12')
-              v-text-field(flat='', label='Subject*', solo='')
-            v-col(cols='12')
-              v-textarea(flat='', label='Message*', solo='')
-            v-col.mx-auto(cols='auto')
-              v-btn(color='accent', x-large='')
-                | Submit
+
 </template>
 
 

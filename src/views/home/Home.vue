@@ -1,54 +1,91 @@
 <template lang="pug">
   #home
-    v-app-bar#bar(app, clipped-left dense color="teal"  height="50" elevate-on-scroll)
+    v-app-bar#bar(app  clipped-left  color="cyan" )
       v-toolbar-title
         span.title.white--text SF2CS-教室考勤系统
       v-spacer
-      template(v-if="isAuth")
-        v-slide-x-transition
-          .headline.pr-2(v-show="!drawer") {{username}}
-        v-avatar(@click.stop="switchDrawer()")
-          v-img(:src='avatar')
-      template(v-else)
-        v-btn(text @click="toLogin").title.white--text 登录
-    v-navigation-drawer(:mini-variant="drawer" app color="teal"  right v-if="isAuth")
-      v-list
-        v-list-item(v-for="item in items" :key="item.title" link :to="item.to")
-          v-list-item-icon
-            v-icon {{ item.icon }}
-          v-list-item-content
-            v-list-item-title {{ item.title }}
-
+      v-expand-transition
+        v-toolbar-title.mx-md-2.text-right(v-show="fab" v-if="isAuth")
+          span.d-block.subtitle-1 {{identity.name}}
+          span.d-block.subtitle-2 {{identity.role}}
+      v-speed-dial(v-model='fab' direction="bottom"  open-on-hover v-if="isAuth")
+        template(v-slot:activator)
+          v-avatar
+            v-img(:src='identity.avatar')
+        v-tooltip(left)
+          template(v-slot:activator = '{on}')
+            v-btn( fab dark color="blue" v-on="on" @click="routeToName('index')")
+              v-icon mdi-home
+          span 主页
+        v-tooltip(left)
+          template(v-slot:activator='{ on }')
+            v-btn(fab dark color='light-green' v-on="on" @click="dialog = true")
+              v-icon mdi-account-cog-outline
+          span 个人设置
+        template(v-for="(menu , index) in menuList")
+          v-tooltip(left)
+            template(v-slot:activator='{on}')
+              v-btn(fab dark :color="menu.color" v-on="on" @click="routeToName(menu.routeName)")
+                v-icon {{menu.icon}}
+            span {{menu.name}}
+        v-tooltip(left)
+          template(v-slot:activator='{on}')
+            v-btn(fab dark color="red" v-on="on" small @click="routeToName('logout')")
+              v-icon mdi-exit-run
+          span 退出
+      v-tooltip(bottom v-else)
+        template(v-slot:activator='{ on }')
+          v-btn.white--text(icon v-on='on' @click="toLogin")
+            v-icon mdi-account
+        span 登录
+      v-dialog(v-model='dialog'  width=486 persistent v-if="isAuth")
+        v-row.justify-center(no-gutters)
+          v-btn.white--text(icon  @click="dialog=false" large  )
+            v-icon mdi-close
+        user-setting
     v-content
       v-scroll-y-transition(mode="out-in")
         router-view
 </template>
 <script>
-  import PersonDetail from "_c/person-detail";
+  import PersonDetail from "_c/person-detail"
+  import UserSetting from "_c/user-setting"
+  import {routeToName} from "_u/util";
+  import * as roleUtil from "_u/role"
 
   export default {
     name: 'home',
     components: {
+      UserSetting,
       PersonDetail
     },
     computed: {
+      routeToName() {
+        return routeToName
+      },
       isAuth() {
         return this.$store.getters['auth/isAuth']
       },
-      username() {
-        return this.$store.getters['auth/username']
+      identity() {
+        return {
+          name: this.$store.getters['auth/username'],
+          avatar: this.$store.getters['auth/avatar'],
+          role: roleUtil.getRoleName(this.$store.getters['auth/role'])
+        }
       },
-      avatar() {
-        return this.$store.getters['auth/avatar']
+      menuList() {
+        return roleUtil.getRoleMenu(this.$store.getters['auth/role'])
       }
     },
     data() {
       return {
+        fab: false,
+        dialog: false,
         drawer: true,
         items: [
-          {title: '个人设置', icon: 'mdi-view-dashboard', to: {name: 'user-setting'}},
+          {title: '个人设置', icon: 'mdi-view-dashboard'},
           {title: '检查', icon: 'mdi-image', to: {name: 'recognition-index'}},
-          {title: '注销', icon: 'mdi-help-box', to: 'user-setting'},
+          {title: '注销', icon: 'mdi-help-box'},
         ],
       }
     },

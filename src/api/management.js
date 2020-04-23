@@ -15,10 +15,36 @@ export const getOnline = () => {
     method: 'get'
   })
 }
-
-export const getNoFacePersonByGatherId = gatherId => {
+export const getHistory = () => {
   return axios.request({
-    url: `${pre}/gather/${gatherId}/person/no_face`,
+    url: `${pre}/recognition/history`,
+    method: 'get'
+  })
+}
+export const getHistoryDetail = (id) => {
+  return axios.request({
+    url: `${pre}/recognition/history/${id}`,
+    method: 'get'
+  })
+}
+
+export const getPersonByGatherId = gatherId => {
+  return axios.request({
+    url: `${pre}/gather/${gatherId}/person`,
     method: 'get',
+  })
+}
+
+export const getMe = () => {
+  return axios.request({
+    url: `${pre}/me`,
+    method: 'get'
+  })
+}
+export const setMe = (data) => {
+  return axios.request({
+    url: `${pre}/me`,
+    method: 'put',
+    data: data
   })
 }

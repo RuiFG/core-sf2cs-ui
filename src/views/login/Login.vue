@@ -1,18 +1,8 @@
 <template lang="pug">
-  .text-center
-    v-progress-circular(:size='80', color='primary', indeterminate='')
-      p.font-weight-thin We Loading…
+  #login.fill-height.mx-auto.justify-center.align-center.d-flex.flex-column
+    p.blue--text.text-md-center(style="width:300px") 正在登录
+    v-progress-linear(indeterminate, rounded, height="6", striped)
 </template>
-<style lang="stylus">
-  .v-progress-circular {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
-</style>
 <script>
   import * as util from '_u/util'
 
@@ -21,8 +11,9 @@
     created() {
       let _this = this;
       let code = util.getQueryString("code")
+      let data={type:"code",code:code}
       console.log(code)
-      _this.$store.dispatch("auth/getToken", {code}).then(data => {
+      _this.$store.dispatch("auth/login", {data}).then(data => {
         console.log("登录成功" + data)
         util.routeToName("index")
       }).then(error => {

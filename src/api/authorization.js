@@ -7,12 +7,14 @@ const pre = "/authorization"
  * @returns {Promise<unknown>}
  * @param code
  */
-export const postAccessToken = (code) => {
+export const login = (data) => {
   return axios.request({
-    url: `${pre}/code/${code}`,
-    method: 'get',
+    url: `${pre}/login`,
+    method: 'post',
+    data: data
   })
 }
+
 export const getMe = () => {
   return axios.request({
     url: `${pre}/me`,
