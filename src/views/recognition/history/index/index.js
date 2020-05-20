@@ -1,3 +1,3 @@
-import RecognitionHistoryIndex from './index'
+import RecognitionHistoryIndex from './Index'
 
 export default RecognitionHistoryIndex

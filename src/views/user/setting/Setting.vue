@@ -70,7 +70,7 @@
         _this.isEditing = !_this.isEditing;
         if (!_this.isEditing) {
           if (_this.editedItem.isImgEdit || _this.editedItem.alias !== _this.me.name) {
-            managementAPI.updatePerson(_this.me.id, _this.editedItem).then(() => {
+            managementAPI.setMe(_this.me.id, _this.editedItem).then(() => {
               _this.$store.dispatch("auth/getMe")
             })
           }

@@ -15,7 +15,7 @@
 
     v-card(color="grey lighten-5" width="99vw" flat).mx-md-auto
       v-row(justify-md="center" align-md="center").my-md-2
-        .title 签到人数和检测头像(当前已签到{{totalResult.length}}人，未签到{{persons.length-totalResult.length}}人)
+        .title 签到人数和检测头像(当前已签到{{totalResult.length}}人，{{persons.length-totalResult.length}}人)
         v-chip(x-large label outlined color="green" @click="attendanceShow=!attendanceShow").mx-md-6
           span {{attendanceShow?`关闭`:`展开`}}详情
           v-icon {{attendanceShow?`mdi-arrow-down`:`mdi-menu`}}
@@ -64,16 +64,17 @@
       _this.attendanceName = _this.$route.params.attendanceName
       _this.gatherId = _this.$route.params.gatherId
       _this.gatherName = _this.$route.params.gatherName
-      managementAPI.getPersonByGatherId(_this.gatherId).then(data => {
+      managementAPI.getStudentByGatherId(_this.gatherId).then(data => {
         _this.persons = data
         managementAPI.getHistoryDetail(_this.attendanceId).then(data => {
           data.forEach(attendanceDetail => {
             let person = _this._.find(_this.persons, {"id": attendanceDetail.personId});
             _this.totalResult.push({
               name: person.alias,
+              avatar: person.avatar,
               face: attendanceDetail.face,
               scope: attendanceDetail.scope,
-              time: new Date(attendanceDetail.modifyTime).toLocaleTimeString('cn', {hour12: false})
+              time: attendanceDetail.modifyTime
             })
             console.log(person)
             _this.persons.splice(_this.persons.indexOf(person))

@@ -46,21 +46,20 @@ export const getRoleMenu = (role) => {
   switch (role) {
     case Role.ROLE_ADMIN:
       return [
-        {name: "仪表盘", routeName:"asfsaf",icon:"mdi-tablet-dashboard",color:"teal"},
-        {name: "班级考勤", routeName:"asfsaf",icon:"mdi-account-multiple-outline",color:"light-green"},
-        {name: "班级管理", routeName:"asfsaf",icon:"mdi-account-group-outline",color:"light-green"},
-        {name: "设备管理", routeName:"asfsaf",icon:"mdi-account-cog-outline",color:"light-green"},
+        {name: "仪表盘", routeName: "admin-dashboard", icon: "mdi-tablet-dashboard", color: "teal"},
+        {name: "班级考勤", routeName: "recognition-index", icon: "mdi-account-multiple-outline", color: "lime"},
+        {name: "班级管理", routeName: "admin-management-gather", icon: "mdi-account-group-outline", color: "brown"},
+        {name: "设备管理", routeName: "admin-management-device", icon: "mdi-monitor-cellphone-star", color: "yellow"},
 
       ]
     case Role.ROLE_TEACHER:
       return [
-        {name: "班级考勤", routeName:"recognition-index",icon:"mdi-account-multiple-outline",color:"lime"},
-        {name: "历史考勤", routeName:"recognition-history-index",icon:"mdi-history",color:"deep-orange"},
+        {name: "班级考勤", routeName: "recognition-index", icon: "mdi-account-multiple-outline", color: "lime"},
+        {name: "历史考勤", routeName: "recognition-history-index", icon: "mdi-history", color: "deep-orange"},
       ]
     case Role.ROLE_STUDENT:
       return [
-        {name: "我的考勤", routeName:"asfsaf",icon:"mdi-human-handsup",color:"orange"},
-        {name: "历史考勤", routeName:"asfsaf",icon:"mdi-history",color:"lime"},
+        {name: "我的考勤", routeName: "student-attendance", icon: "mdi-human-handsup", color: "orange"}
       ]
   }
 }

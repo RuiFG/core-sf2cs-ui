@@ -1,8 +1,8 @@
 <template lang="pug">
   #home
-    v-app-bar#bar(app  clipped-left  color="cyan" )
-      v-toolbar-title
-        span.title.white--text SF2CS-教室考勤系统
+    v-app-bar#bar(app  clipped-left  color="cyan")
+      v-toolbar-title(@click="()=>{routeToName('index')}")
+        a.title.white--text SF2CS-教室考勤系统
       v-spacer
       v-expand-transition
         v-toolbar-title.mx-md-2.text-right(v-show="fab" v-if="isAuth")
@@ -10,18 +10,8 @@
           span.d-block.subtitle-2 {{identity.role}}
       v-speed-dial(v-model='fab' direction="bottom"  open-on-hover v-if="isAuth")
         template(v-slot:activator)
-          v-avatar
-            v-img(:src='identity.avatar')
-        v-tooltip(left)
-          template(v-slot:activator = '{on}')
-            v-btn( fab dark color="blue" v-on="on" @click="routeToName('index')")
-              v-icon mdi-home
-          span 主页
-        v-tooltip(left)
-          template(v-slot:activator='{ on }')
-            v-btn(fab dark color='light-green' v-on="on" @click="dialog = true")
-              v-icon mdi-account-cog-outline
-          span 个人设置
+          v-avatar(@click="dialog = true")
+              v-img(:src='identity.avatar')
         template(v-for="(menu , index) in menuList")
           v-tooltip(left)
             template(v-slot:activator='{on}')
@@ -30,7 +20,7 @@
             span {{menu.name}}
         v-tooltip(left)
           template(v-slot:activator='{on}')
-            v-btn(fab dark color="red" v-on="on" small @click="routeToName('logout')")
+            v-btn(fab dark color="red" v-on="on" small @click="toLogout")
               v-icon mdi-exit-run
           span 退出
       v-tooltip(bottom v-else)
@@ -92,14 +82,20 @@
     methods: {
       switchDrawer() {
         this.drawer = !this.drawer
-      }
-      ,
+      },
       toLogin() {
         let oauthUrl = "http://118.24.1.170:8888/oauth/authorize"
         let callBackUrl = escape("http://127.0.0.1:8081/#/login")
         let clientId = "sf2cs"
         let responseType = "code"
         window.location = `${oauthUrl}?redirect_uri=${callBackUrl}&scope=READ&response_type=${responseType}&client_id=${clientId}`
+      },
+      toLogout() {
+        let oauthUrl = "http://118.24.1.170:8888/oauth/logout"
+        let callBackUrl = escape("http://127.0.0.1:8081/#/logout")
+        let clientId = "sf2cs"
+        window.location = `${oauthUrl}?redirect_url=${callBackUrl}&client_id=${clientId}`
+
       }
 
     }

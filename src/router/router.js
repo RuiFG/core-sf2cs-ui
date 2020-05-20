@@ -39,7 +39,8 @@ export const routes = [
         name: 'recognition-detail',
         meta: {meta: '考勤详情'},
         component: () => import("_v/recognition/real-time/detail")
-      }, {
+      },
+      {
         path: 'recognition/history/index',
         name: 'recognition-history-index',
         meta: {meta: '历史考勤'},
@@ -51,6 +52,30 @@ export const routes = [
         meta: {meta: '历史考勤详情'},
         component: () => import("_v/recognition/history/detail")
 
+      },
+      {
+        path: 'admin/dashboard',
+        name: 'admin-dashboard',
+        meta: {meta: '仪表盘'},
+        component: () => import("_v/admin/dashboard")
+      },
+      {
+        path: 'admin/management/gather',
+        name: 'admin-management-gather',
+        meta: {meta: '班级管理'},
+        component: () => import("_v/admin/management/gather")
+      },
+      {
+        path: 'admin/management/device',
+        name: 'admin-management-device',
+        meta: {meta: '设备管理'},
+        component: () => import("_v/admin/management/device")
+      },
+      {
+        path: 'student/attendance',
+        name: 'student-attendance',
+        meta: {meta: '我的考勤'},
+        component: () => import("_v/student/attendance")
       }
     ]
   }

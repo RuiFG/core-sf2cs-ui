@@ -11,3 +11,15 @@ export const detect = (file) => {
     data: param
   })
 }
+export const addGatherStudent = (gatherId, peronId) => {
+  return axios.request({
+    url: `${pre}/gather/${gatherId}/person/${peronId}`,
+    method: 'post',
+  })
+}
+export const delGatherStudent = (gatherId, peronId) => {
+  return axios.request({
+    url: `${pre}/gather/${gatherId}/person/${peronId}`,
+    method: 'delete',
+  })
+}

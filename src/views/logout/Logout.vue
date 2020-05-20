@@ -9,8 +9,8 @@
   export default {
     name: "logout",
     created() {
-      this.$store.dispatch("auth/logout").then(() => {
-        setTimeout(() => util.routeToName("index"), 3000)
+      this.$store.dispatch("auth/logout").finally(() => {
+        setTimeout(() => util.routeToName("index"), 1000)
       })
     }
   }

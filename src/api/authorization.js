@@ -14,6 +14,12 @@ export const login = (data) => {
     data: data
   })
 }
+export const logout = () => {
+  return axios.request({
+    url: `${pre}/logout`,
+    method: 'get',
+  })
+}
 
 export const getMe = () => {
   return axios.request({

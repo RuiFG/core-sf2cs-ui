@@ -95,7 +95,12 @@ const actions = {
     }))
   },
   logout({commit}) {
-    commit('LOGOUT')
+    return new Promise(((resolve, reject) => {
+      authAPI.logout().then(() => resolve())
+        .catch(() => reject()).finally(() => {
+        commit('LOGOUT')
+      })
+    }))
   }
 }
 

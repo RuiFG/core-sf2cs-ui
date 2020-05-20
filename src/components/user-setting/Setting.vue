@@ -43,6 +43,7 @@
   import * as serverAPI from '_api/server'
   import * as ruleUtil from '_u/rule'
   import * as roleUtil from '_u/role'
+  import * as util from '_u/util'
 
   export default {
     name: 'user-setting',
@@ -114,7 +115,7 @@
         }
         _this.isUpdating = true
         serverAPI.detect(file).then(img => {
-          _this.imgPreview = 'api/avatar/' + img
+          _this.imgPreview =util.toAvatarSrc(img)
           _this.editedItem.avatar = img
         })
           .finally(() => {

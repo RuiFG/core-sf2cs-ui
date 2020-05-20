@@ -13,7 +13,9 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(route => {
   window.document.title = route.meta.meta || '考勤系统'
-  Vue.prototype.$loading.finish()
+  setTimeout(()=>{
+    Vue.prototype.$loading.finish()
+  },1000)
 })
 
 export default router
