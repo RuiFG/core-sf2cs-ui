@@ -123,7 +123,7 @@ export const addDevice = (name) => {
 
 export const getStudentHistory = () => {
   return axios.request({
-    url: `${pre}/student/history`,
+    url: `${pre}/student/attendance`,
     method: 'get'
   })
 }

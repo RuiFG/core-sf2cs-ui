@@ -73,7 +73,7 @@
 
       managementAPI.getStudentByGatherId(_this.gatherId).then(data => {
         _this.persons = data
-        _this.socket = new WebSocket(`ws://127.0.0.1:9999/management/publish/${this.attendanceId}?authorization=${this.$store.getters['auth/token']}`);
+        _this.socket = new WebSocket(`ws://34.92.68.194:9999/management/publish/${this.attendanceId}?authorization=${this.$store.getters['auth/token']}`);
         _this.socket.onopen = _this.onOpen
         _this.socket.onmessage = _this.onMessage
         _this.socket.onerror = _this.onError

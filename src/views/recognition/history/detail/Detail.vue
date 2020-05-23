@@ -15,7 +15,7 @@
 
     v-card(color="grey lighten-5" width="99vw" flat).mx-md-auto
       v-row(justify-md="center" align-md="center").my-md-2
-        .title 签到人数和检测头像(当前已签到{{totalResult.length}}人，{{persons.length-totalResult.length}}人)
+        .title 签到人数和检测头像(当前已签到{{totalResult.length}}人，{{persons.length}}人)
         v-chip(x-large label outlined color="green" @click="attendanceShow=!attendanceShow").mx-md-6
           span {{attendanceShow?`关闭`:`展开`}}详情
           v-icon {{attendanceShow?`mdi-arrow-down`:`mdi-menu`}}
@@ -77,7 +77,7 @@
               time: attendanceDetail.modifyTime
             })
             console.log(person)
-            _this.persons.splice(_this.persons.indexOf(person))
+            _this.persons.splice(_this.persons.indexOf(person),1)
           })
         })
       })
