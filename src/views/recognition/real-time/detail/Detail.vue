@@ -9,7 +9,7 @@
               person-detail(:img='util.toAvatarSrc(person.avatar)' :name="person.alias" time="未检测")
     v-card(color="grey lighten-5" width="99vw" flat).mx-md-auto
       v-row(justify-md="center" align-md="center").my-md-2
-        .title 当前已签到{{totalResult.length}}人，未签到{{persons.length-totalResult.length+1}}人
+        .title 当前已签到{{totalResult.length}}人，未签到{{persons.length}}人
         v-chip(x-large label outlined color="green" @click="attendanceShow=!attendanceShow").mx-md-6
           span {{attendanceShow?`关闭`:`展开`}}详情
           v-icon {{attendanceShow?`mdi-arrow-down`:`mdi-menu`}}
@@ -94,34 +94,44 @@
       onMessage(event) {
         let _this = this
         let recognitionResult = JSON.parse(event.data)
-        recognitionResult.persons.forEach(person => {
-          let filterPerson = _this._.find(_this.persons, {'id': person.personId});
-          let filterResult = _this._.find(_this.totalResult, {"id": person.personId});
-          if (_this._.isUndefined(filterPerson) && _this._.isUndefined(filterResult)) {
-            console.log("错误")
+          if (recognitionResult.id===undefined){
+              _this.addDetail(recognitionResult)
           }
-          if (_this._.isUndefined(filterResult)) {
-            _this.totalResult.push({
-                id: person.id,
-                avatar: util.toAvatarSrc(filterPerson.avatar),
-                face: util.toFaceSrc(person.face),
-                name: filterPerson.alias,
-                compareScore: person.compareScore,
-                time: new Date().toLocaleTimeString("cn", {hour12: false})
-              }
-            )
-            _this.persons.splice(_this.persons.indexOf(filterPerson), 1)
+          else if(recognitionResult.persons!==undefined){
+              recognitionResult.persons.forEach(person => {
+                  _this.addDetail(person)
+              })
+          }
 
-          } else if (_this._.isUndefined(filterPerson)) {
-            filterResult.face = util.toFaceSrc(person.face)
-            filterResult.time = new Date().toLocaleTimeString("cn", {hour12: false})
-          } else {
-            console.log("出错")
-          }
-        })
       },
       onClose() {
-      }
+      },
+        addDetail(person){
+            let _this=this
+            let filterPerson = _this._.find(_this.persons, {'id': person.personId});
+            let filterResult = _this._.find(_this.totalResult, {"id": person.personId});
+            if (_this._.isUndefined(filterPerson) && _this._.isUndefined(filterResult)) {
+                console.log("错误")
+            }
+            if (_this._.isUndefined(filterResult)) {
+                _this.totalResult.push({
+                        id: person.id,
+                        avatar: util.toAvatarSrc(filterPerson.avatar),
+                        face: util.toFaceSrc(person.face),
+                        name: filterPerson.alias,
+                        compareScore: person.compareScore,
+                        time: new Date().toLocaleTimeString("cn", {hour12: false})
+                    }
+                )
+                _this.persons.splice(_this.persons.indexOf(filterPerson), 1)
+
+            } else if (_this._.isUndefined(filterPerson)) {
+                filterResult.face = util.toFaceSrc(person.face)
+                filterResult.time = new Date().toLocaleTimeString("cn", {hour12: false})
+            } else {
+                console.log("出错")
+            }
+        }
 
     }
   }
